@@ -46,9 +46,9 @@ void app_main(void)
     // 3. CRITICAL: Disable Power Save so sniffer doesn't miss packets
     esp_wifi_set_ps(WIFI_PS_NONE);
 
-    // 4. Start Sniffer
-    // ESP_ERROR_CHECK(esp_wifi_set_promiscuous(true));
-    // ESP_ERROR_CHECK(esp_wifi_set_promiscuous_rx_cb(&hybrid_sniffer_cb));
+    //4. Start Sniffer
+    ESP_ERROR_CHECK(esp_wifi_set_promiscuous(true));
+    ESP_ERROR_CHECK(esp_wifi_set_promiscuous_rx_cb(&hybrid_sniffer_cb));
 
     ESP_LOGI(WIFI_TAG, "Mirror System Initialized. Waiting for Wi-Fi...");
     xTaskCreate(timeout_monitor_task, "timeout_task", TASK_STACK_SIZE_SMALL, NULL, 5, NULL);

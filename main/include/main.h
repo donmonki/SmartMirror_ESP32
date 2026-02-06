@@ -69,7 +69,8 @@ extern "C" {
 
 /* WiFi MAC Address Detection */
 #define TARGET_MAC_LEN          6
-#define TARGET_MAC_ADDR         {0x8A, 0xD4, 0xD7, 0x47, 0xC9, 0x62}
+#define TARGET_MAC_ADDR_1         {0x8A, 0xD4, 0xD7, 0x47, 0xC9, 0x62}
+#define TARGET_MAC_ADDR_2         {0x9e, 0x37, 0x32, 0x80, 0x33, 0x75}
 
 #define MAC_SEARCH_WINDOW       20  /* Search first 20 bytes for MAC address */
 
