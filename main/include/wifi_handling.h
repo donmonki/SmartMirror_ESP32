@@ -15,13 +15,12 @@ extern "C" {
 extern const uint8_t target_mac[TARGET_MAC_LEN];
 
 /* Last time target device was detected (in milliseconds) */
-extern uint32_t last_seen_ms;
+extern uint32_t last_seen_ms_1;
+extern uint32_t last_seen_ms_2;
 
 /* Ping handle for continuous device monitoring */
-extern esp_ping_handle_t ping_handle;
-
-/* Task handle for ping task */
-extern TaskHandle_t ping_task_handle;
+extern esp_ping_handle_t ping_handle_1;
+extern esp_ping_handle_t ping_handle_2;
 
 /* ============================================================================
  * FUNCTION DECLARATIONS

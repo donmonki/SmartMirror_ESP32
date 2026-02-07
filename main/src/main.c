@@ -43,7 +43,7 @@ void app_main(void)
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config));
     ESP_ERROR_CHECK(esp_wifi_start());
 
-    // 3. CRITICAL: Disable Power Save so sniffer doesn't miss packets
+    // 3. Disable Power Save so sniffer doesn't miss packets
     esp_wifi_set_ps(WIFI_PS_NONE);
 
     //4. Start Sniffer
