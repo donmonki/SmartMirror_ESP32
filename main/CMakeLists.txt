@@ -2,6 +2,7 @@ idf_component_register(
     SRCS 
         src/main.c
         src/wifi_handling.c
+        src/LED_control.c
     INCLUDE_DIRS 
         include         # Public headers accessible to other components
     REQUIRES 

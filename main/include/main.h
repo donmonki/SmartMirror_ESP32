@@ -41,6 +41,7 @@ extern "C" {
 #define APP_NAME                "SmartMirror"
 #define APP_VERSION             "1.0.0"
 #define WIFI_TAG                "WIFI_CHECKER"
+#define LED_TAG                 "LED_CONTROLLER"
 
 /* Hardware Configuration */
 #define TRIGGER_GPIO            23

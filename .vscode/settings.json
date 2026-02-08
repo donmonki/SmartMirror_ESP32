@@ -16,5 +16,6 @@
     "--query-driver=**",
     "--compile-commands-dir=c:\\EVERYTHING\\coding\\ESP_IDE_WORKSPACE\\SmartMirror\\build"
   ],
-  "idf.currentSetup": "c:\\esp\\v5.5.2\\esp-idf"
+  "idf.currentSetup": "c:\\esp\\v5.5.2\\esp-idf",
+  "idf.flashType": "UART"
 }

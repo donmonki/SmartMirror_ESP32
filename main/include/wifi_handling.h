@@ -54,7 +54,7 @@ void on_ping_timeout(esp_ping_handle_t hdl, void *args);
  * @brief Initialize and start the ping engine
  * @details Sets up periodic ping to the target iPhone IP address
  */
-void start_ping_engine(void);
+void start_ping_engine(const char *ip_str, uint8_t phone_id, esp_ping_handle_t *handle);
 
 /**
  * @brief Timeout monitor task

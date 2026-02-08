@@ -1,4 +1,4 @@
-#include "main.h"
+#include "wifi_handling.h"
 
 const uint8_t target_mac_1[TARGET_MAC_LEN] = TARGET_MAC_ADDR_1;
 const uint8_t target_mac_2[TARGET_MAC_LEN] = TARGET_MAC_ADDR_2;
