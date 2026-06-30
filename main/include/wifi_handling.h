@@ -8,7 +8,7 @@ extern "C" {
 #endif
 
 /* ============================================================================
- * GLOBAL VARIABLES (declared in main.c)
+ * GLOBAL VARIABLES
  * ============================================================================ */
 
 /* Target device MAC address for detection */

@@ -2,6 +2,7 @@
 #include "main.h"
 #include "wifi_handling.h"
 #include "LED_control.h"
+#include "ld2410_sensor.h"
 
 uint8_t status_byte = 0;
 
@@ -35,40 +36,10 @@ void app_main(void)
         led_strip_clear(led_strip);
         led_strip_refresh(led_strip);
 
-        // // Fade In
-        // for (int b = 0; b <= 100; b++) {
-        //     for (int i = 0; i < LED_STRIP_MAX_LEDS; i++) {
-        //         led_strip_set_pixel_dimmed(led_strip, i, 0, 255, 0, b);
-        //     }
-        //     led_strip_refresh(led_strip);
-        //     vTaskDelay(pdMS_TO_TICKS(20));
-        // }
-
-        // // Fade Out
-        // for (int b = 100; b >= 0; b--) {
-        //     for (int i = 0; i < LED_STRIP_MAX_LEDS; i++) {
-        //         led_strip_set_pixel_dimmed(led_strip, i, 0, 255, 0, b);
-        //     }
-        //     led_strip_refresh(led_strip);
-        //     vTaskDelay(pdMS_TO_TICKS(20));
-        // }
-    
-    //    for (int i = 0; i < LED_STRIP_MAX_LEDS; i++) {
-    //     // Clear previous state
-    //     led_strip_clear(led_strip);
-    //     // Set only the current pixel to Green
-    //     led_strip_set_pixel(led_strip, i, 255, 255, 0); 
-    //     led_strip_refresh(led_strip);
-    //     vTaskDelay(pdMS_TO_TICKS(50)); // Fast movement
+      
     }
 
-        // // Refresh pushes the 24-bit data and triggers the >50us RESET pulse [cite: 75, 98]
-        // ESP_ERROR_CHECK(led_strip_refresh(led_strip));
-        // vTaskDelay(pdMS_TO_TICKS(1000));
-
-        // // Clear all pixels (turns them off)
-        // ESP_ERROR_CHECK(led_strip_clear(led_strip));
-        // vTaskDelay(pdMS_TO_TICKS(1000));
+        
     
 }
 

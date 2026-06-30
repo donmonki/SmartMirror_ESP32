@@ -52,7 +52,7 @@ void led_strip_ON_sequence_soft(void){
                 led_strip_set_pixel_dimmed(led_strip, i, color_array[0], color_array[1], color_array[2], b);
             }
             led_strip_refresh(led_strip);
-            vTaskDelay(pdMS_TO_TICKS(40));
+            vTaskDelay(pdMS_TO_TICKS(20));
         }
 
 }
