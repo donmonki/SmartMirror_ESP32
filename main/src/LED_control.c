@@ -44,29 +44,36 @@ void led_strip_set_pixel_dimmed(led_strip_handle_t strip, uint32_t index, uint32
 
 }
 
-void led_strip_ON_sequence_soft(void){
+void led_strip_ON_full(void)
+{
+    for (int i = 0; i < LED_STRIP_MAX_LEDS; i++) {
+        led_strip_set_pixel_dimmed(led_strip, i, color_array[0], color_array[1], color_array[2], MAX_BRIGHTNESS);
+    }
+    led_strip_refresh(led_strip);
+}
 
+void led_strip_ON_sequence_soft(void)
+{
     // NEED TO ADJUST LED NUMBERING WHEN FINALIZED
-    for (int b = 0; b <= MAX_BRIGHTNESS; b++) {
+    for (int b = 0; b <= MAX_BRIGHTNESS; b += 5) {
             for (int i = 0; i < LED_STRIP_MAX_LEDS; i++) {
                 led_strip_set_pixel_dimmed(led_strip, i, color_array[0], color_array[1], color_array[2], b);
             }
             led_strip_refresh(led_strip);
             vTaskDelay(pdMS_TO_TICKS(20));
         }
-
+    led_strip_ON_full();
 }
 
 
-void led_strip_OFF_sequence_soft(void){
-    
-     // NEED TO ADJUST LED NUMBERING WHEN FINALIZED
-    for (int b = MAX_BRIGHTNESS; b <= 0; b--) {
+void led_strip_OFF_sequence_soft(void)
+{
+    // NEED TO ADJUST LED NUMBERING WHEN FINALIZED
+    for (int b = MAX_BRIGHTNESS; b >= 0; b -= 5) {
             for (int i = 0; i < LED_STRIP_MAX_LEDS; i++) {
                 led_strip_set_pixel_dimmed(led_strip, i, color_array[0], color_array[1], color_array[2], b);
             }
             led_strip_refresh(led_strip);
             vTaskDelay(pdMS_TO_TICKS(40));
         }
-
 }

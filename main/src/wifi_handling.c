@@ -1,4 +1,4 @@
-#include "wifi_handling.h"
+#include "main.h"
 
 const uint8_t target_mac_1[TARGET_MAC_LEN] = TARGET_MAC_ADDR_1;
 const uint8_t target_mac_2[TARGET_MAC_LEN] = TARGET_MAC_ADDR_2;
@@ -6,7 +6,9 @@ esp_ping_handle_t ping_handle_1 = NULL;
 esp_ping_handle_t ping_handle_2 = NULL;
 uint32_t last_seen_ms_1 = 0;
 uint32_t last_seen_ms_2 = 0;
+TaskHandle_t ping_task_handle = NULL;
 
+// Use a Task Handle to start the task later
 
 void timeout_monitor_task(void *pvParameters)
 {
@@ -17,6 +19,9 @@ void timeout_monitor_task(void *pvParameters)
         uint32_t time_2 = now - last_seen_ms_2;
         bool active_1 = time_1 < TIMEOUT_MS;
         bool active_2 = time_2 < TIMEOUT_MS;
+        // ESP_LOGW(WIFI_TAG, "Now time: %d", now);
+        // ESP_LOGW(WIFI_TAG, "Last_seen time: %d", last_seen_ms);
+        // ESP_LOGW(WIFI_TAG, "GPIO LEVEL: %d", gpio_get_level(TRIGGER_GPIO));
 
         // If current time minus last seen time is greater than timeout
       ESP_LOGI(WIFI_TAG, "SYS ACTIVE TIMERS: ID1:%.3f|ID2:%.3f < %.3f",time_1/1e3,time_2/1e3,TIMEOUT_MS/1e3);
@@ -76,9 +81,9 @@ void on_ping_success(esp_ping_handle_t hdl, void *args)
     else if (id == 1)
     {
         last_seen_ms_2 = now;
-        ESP_LOGI(WIFI_TAG, "Ping success for Phone ID:<%d>! Time: %dms",id, (int)elapsed_time);
     }
     
+    ESP_LOGI(WIFI_TAG, "Ping success for Phone ID:<%d>! Time: %dms",id, (int)elapsed_time);
 }
 
 
@@ -92,7 +97,7 @@ void start_ping_engine(const char *ip_str, uint8_t phone_id, esp_ping_handle_t *
 
     esp_ping_config_t ping_config = ESP_PING_DEFAULT_CONFIG();
     ping_config.target_addr = target_addr;
-    ping_config.interval_ms = PING_INTERVAL_MS; 
+    ping_config.interval_ms = PING_INTERVAL_MS; // Poke every 10 seconds
     ping_config.count = PING_COUNT;
 
     esp_ping_callbacks_t cbs = {

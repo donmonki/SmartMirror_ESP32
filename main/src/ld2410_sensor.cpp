@@ -25,6 +25,7 @@ static const uart_config_t uart_config = {
 static MyLD2410 *sensor = NULL;
 static ld2410_data_t latest_sensor_data = {0};
 static uint64_t nextPrint = 0;
+static uint32_t no_data_poll_count = 0;
 
 /* ============================================================================
  * FUNCTION IMPLEMENTATIONS
@@ -73,8 +74,11 @@ bool ld2410_init(void)
     }
 
 #ifdef ENHANCED_MODE
-    sensor->enhancedMode();
-    ESP_LOGI(LD2410_TAG, "Enhanced mode enabled");
+    if (!sensor->enhancedMode()) {
+        ESP_LOGW(LD2410_TAG, "Enhanced mode command did not succeed; continuing with live polling");
+    } else {
+        ESP_LOGI(LD2410_TAG, "Enhanced mode enabled");
+    }
 #else
     sensor->enhancedMode(false);
     ESP_LOGI(LD2410_TAG, "Enhanced mode disabled");
@@ -92,9 +96,11 @@ ld2410_data_t ld2410_get_data(void)
         return latest_sensor_data;
     }
     
-    // Check for new sensor data
-    if (sensor->check() == MyLD2410::Response::DATA) {
-        // Update latest data
+    MyLD2410::Response response = sensor->check();
+
+    if (response == MyLD2410::Response::DATA) {
+        no_data_poll_count = 0;
+
         latest_sensor_data.presence_detected = sensor->presenceDetected();
         latest_sensor_data.detected_distance_cm = sensor->detectedDistance();
         
@@ -109,10 +115,20 @@ ld2410_data_t ld2410_get_data(void)
             latest_sensor_data.stationary_target_signal = sensor->stationaryTargetSignal();
             latest_sensor_data.stationary_target_distance_cm = sensor->stationaryTargetDistance();
         }
-        
-        if (sensor->inEnhancedMode() && (sensor->getFirmwareMajor() > 1)) {
-            latest_sensor_data.light_level = sensor->getLightLevel();
-            latest_sensor_data.output_level = sensor->getOutLevel();
+
+        latest_sensor_data.light_level = sensor->getLightLevel();
+        latest_sensor_data.output_level = sensor->getOutLevel();
+
+        ESP_LOGI(LD2410_TAG, "LD2410 data frame: enhanced=%d, status=%u, distance=%u, light=%u, output=%u",
+                 sensor->inEnhancedMode(),
+                 sensor->getStatus(),
+                 latest_sensor_data.detected_distance_cm,
+                 latest_sensor_data.light_level,
+                 latest_sensor_data.output_level);
+    } else {
+        no_data_poll_count++;
+        if ((no_data_poll_count % 100) == 0) {
+            ESP_LOGW(LD2410_TAG, "No LD2410 data frames received for %lu polls", (unsigned long)no_data_poll_count);
         }
     }
     

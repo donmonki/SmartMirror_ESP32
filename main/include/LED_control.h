@@ -46,6 +46,7 @@ void led_strip_set_pixel_dimmed(led_strip_handle_t strip, uint32_t index, uint32
 
 void breathe_effect(void);
 
+void led_strip_ON_full(void);
 void led_strip_ON_sequence_soft(void);
 void led_strip_OFF_sequence_soft(void);
 /* ============================================================================

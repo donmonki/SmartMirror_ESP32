@@ -53,7 +53,7 @@ bool MyLD2410::begin()
 {
   ESP_LOGI(TAG, "Initializing LD2410 sensor");
   
-  uint64_t giveUp = get_time_ms() + 2000UL;
+  uint64_t giveUp = get_time_ms() + 20000UL;
   bool online = false;
   isConfig = false;
   
