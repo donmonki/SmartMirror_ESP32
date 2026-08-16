@@ -41,6 +41,7 @@ extern "C" {
 #define APP_NAME                "SmartMirror"
 #define APP_VERSION             "1.0.0"
 #define WIFI_TAG                "WIFI_CHECKER"
+#define LED_TAG                 "LED_CONTROLLER"
 
 /* Hardware Configuration */
 #define TRIGGER_GPIO            23
@@ -48,6 +49,13 @@ extern "C" {
 /* WiFi Configuration */
 #define WIFI_SSID               "ICO-1C792D"
 #define WIFI_PASS               "RydWuetbids4"
+
+/* WiFi MAC Address Detection */
+#define TARGET_MAC_LEN          6
+#define TARGET_MAC_ADDR_1       {0x8A, 0xD4, 0xD7, 0x47, 0xC9, 0x62}
+#define TARGET_MAC_ADDR_2       {0x9e, 0x37, 0x32, 0x80, 0x33, 0x75}
+
+#define MAC_SEARCH_WINDOW       20  /* Search first 20 bytes for MAC address */
 
 /* iPhone Detection Configuration */
 #define PHONE_1          "192.168.0.111"
@@ -74,10 +82,10 @@ extern "C" {
 
 #define MAC_SEARCH_WINDOW       20  /* Search first 20 bytes for MAC address */
 
-
 /* ============================================================================
  * ENUMS & TYPES
  * ============================================================================ */
+
 /* STATUS BYTE BIT REPRESENTATION */
 typedef enum{
     FLAG_SYSTEM_ACTIVE = 0,
@@ -86,8 +94,6 @@ typedef enum{
 
 
 }Status_bit_rep_t;
-
-
 /* ============================================================================
  * STRUCTURES
  * ============================================================================ */
